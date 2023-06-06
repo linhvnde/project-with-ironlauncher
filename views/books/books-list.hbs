@@ -13,9 +13,11 @@
     <p>
         Author: {{this.author.name}} <br />
         Rating: {{this.rating}} <br />
-        <a href="/books/{{this._id}}">More details</a>
-         <a href="/books/{{_id}}/edit">Edit</a> {{!-- link to redirect to the edit form for each specific book  --}}
- 
+        <a href="/books/{{_id}}">More details</a>
+        <a href="/books/{{_id}}/edit">Edit</a> {{!-- link to redirect to the edit form for each specific book  --}}
+        <form method="POST" action="/books/{{_id}}/delete" >
+            <button>Delete</button>
+        </form>
 
     </p>
 
