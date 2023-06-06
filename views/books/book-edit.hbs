@@ -1,0 +1,21 @@
+<h2>Edit {{this.name}} </h2>
+
+<form method="post" action="/books/{{this.id}}/edit">
+    <label> Title:
+        <input type="text" name="title" value="{{this.title}}"/>
+    </label>
+
+    <label> Author:
+        <input type="text" name="author" value="{{this.author}}" />
+    </label>
+
+    <label> Description:
+        <textarea name="description" cols="30" rows="4" value="{{this.description}}"> </textarea>
+    </label>
+
+    <label> Rate:
+        <input type="number" name="rating" min="1" max="10" value="{{this.rating}}" />
+    </label>
+
+    <button type="submit"> Edit </button>
+</form>

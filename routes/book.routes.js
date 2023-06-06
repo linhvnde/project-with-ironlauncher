@@ -49,21 +49,43 @@ router.post("/books/create", (req, res, next) => {
       next(e);
     });
 });
-
-// GET route to display the form to update a specific book
-router.get("/books/:bookId/edit", (req, res, next) => {
-  const { bookId } = req.params;
+//UPDATE
+///GET route to display the form to update a specific book with prefilled info
+router.get("/books/:id/edit", (req, res, next) => {
+  const bookId = req.params.id;
 
   Book.findById(bookId)
     .then((bookToEdit) => {
-      console.log(bookToEdit);
+      res.render("books/book-edit", bookToEdit);
     })
     .catch((e) => {
-      console.log("error creating new book", e);
+      console.log("error editing a book", e);
       next(e);
     });
 });
-
+///POST route to update the info from the form
+router.post("/books/:id/edit", (req, res, next) => {
+  const bookId = req.params.id;
+  const { title, author, description, rating } = req.body;
+  Book.findByIdAndUpdate(
+    bookId,
+    { title, description, author, rating },
+    { new: true }
+  )
+    .then(() => {
+      res.redirect("/books");
+    })
+    .catch((e) => {
+      console.log("error post the editing info to a book", e);
+      next(e);
+    });
+});
+//DELETE
+// router.post("/books/:id/delete", (req, res) => {
+  
+//   res.redirect("/books")
+// })
+///POST route to delete by id
 /* GET /books/:bookId */
 router.get("/books/:bookId", (req, res, next) => {
   const bookId = req.params.bookId;
