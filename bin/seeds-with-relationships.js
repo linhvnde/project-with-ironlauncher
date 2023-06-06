@@ -22,6 +22,18 @@ const books = [
     rating: 9,
     author: "J.K. Rowling",
   },
+  {
+    title: "Harry Potter v.3",
+    description: "Harry Potter v3",
+    rating: 6,
+    author: "J.K. Rowling",
+  },
+  {
+    title: "Harry Potter v.4",
+    description: "Harry Potter v4",
+    rating: 6,
+    author: "J.K. Rowling",
+  },
 ];
 
 const authors = [

@@ -62,8 +62,17 @@ router.post("/books/create", (req, res, next) => {
 });
 //UPDATE
 ///GET route to display the form to update a specific book with prefilled info
-router.get("/books/:id/edit", (req, res, next) => {
+router.get("/books/:id/edit", async (req, res, next) => {
   const bookId = req.params.id;
+
+  try {
+    const authors = await Author.find();
+    const bookToEdit = await Book.findById(bookId);
+
+    res.render("books/book-edit", { book: bookToEdit, authors: authors });
+  } catch (e) {
+    next(e);
+  }
   /*
  router.get('/books/:bookId/edit', async (req, res, next) => {
     const { bookId } = req.params;
@@ -96,6 +105,7 @@ router.get("/books/:id/edit", (req, res, next) => {
 
 
 */
+  /*
   Book.findById(bookId)
     .populate("author")
     .then((bookToEdit) => {
@@ -105,6 +115,7 @@ router.get("/books/:id/edit", (req, res, next) => {
       console.log("error editing a book", e);
       next(e);
     });
+    */
 });
 ///POST route to update the info from the form
 router.post("/books/:id/edit", (req, res, next) => {
