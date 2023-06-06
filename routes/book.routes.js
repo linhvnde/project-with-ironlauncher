@@ -31,7 +31,7 @@ router.get("/books/create", (req, res, next) => {
   Author.find()
     .then((authorsArr) => {
       //console.log(authorsArr);
-      res.render("books/book-create", { authorsArr });//this alway has to be the same with the one in views
+      res.render("books/book-create", { authorsArr }); //this alway has to be the same with the one in views
     })
     .catch((e) => {
       console.log("error display form to creating new book", e);
