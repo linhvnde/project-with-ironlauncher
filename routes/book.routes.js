@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router(); //create a class Router
 const Book = require("../models/Book.model");
+const Author = require("../models/Author.model");
+
 /* GET /books */
 router.get("/books", (req, res, next) => {
   // const { minRate } = req.query;
@@ -10,6 +12,7 @@ router.get("/books", (req, res, next) => {
     filter = { rating: { $gte: minRate } };
   }
   Book.find(filter)
+    .populate("author")
     .then((books) => {
       // console.log(booksFromDB);
       // const data = {
@@ -91,6 +94,7 @@ router.get("/books/:bookId", (req, res, next) => {
   const bookId = req.params.bookId;
   // console.log(bookId);
   Book.findById(bookId)
+    .populate("author")
     .then((oneBookFromDB) => {
       //oneBookFromDB is already an object so  in the line 38 dont need the {}
       // res.send(`THIS IS THE ONE BOOK FROM DB:${{ oneBookFromDB }}`);
