@@ -64,7 +64,38 @@ router.post("/books/create", (req, res, next) => {
 ///GET route to display the form to update a specific book with prefilled info
 router.get("/books/:id/edit", (req, res, next) => {
   const bookId = req.params.id;
+  /*
+ router.get('/books/:bookId/edit', async (req, res, next) => {
+    const { bookId } = req.params;
 
+    try {
+        const authors = await Author.find();
+        const bookDetails = await Book.findById(bookId);
+
+        res.render('books/book-edit.hbs', { book: bookToEdit, authors: authors });
+
+    } catch (e) {
+        next(e);
+    }
+
+});
+ */
+
+  /*
+    let authors;
+
+    Author.find()
+        .then( (authorsFromDB) => {
+            authors = authorsFromDB;
+            return Book.findById(bookId)
+        })
+        .then( (bookToEdit) => {
+            res.render('books/book-edit.hbs', { book: bookToEdit, authors: authors });
+        })
+        .catch(error => next(error));
+
+
+*/
   Book.findById(bookId)
     .populate("author")
     .then((bookToEdit) => {
