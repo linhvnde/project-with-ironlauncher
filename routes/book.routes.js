@@ -92,10 +92,15 @@ router.post("/books/:id/edit", (req, res, next) => {
     });
 });
 //DELETE
-// router.post("/books/:id/delete", (req, res) => {
-  
-//   res.redirect("/books")
-// })
+router.post("/books/:id/delete", (req, res, next) => {
+  const bookId = req.params.id;
+  Book.findByIdAndDelete(bookId)
+    .then(() => res.redirect("/books"))
+    .catch((e) => {
+      console.log("error delete the book", e);
+      next(e);
+    });
+});
 ///POST route to delete by id
 /* GET /books/:bookId */
 router.get("/books/:bookId", (req, res, next) => {
