@@ -28,7 +28,15 @@ router.get("/books", (req, res, next) => {
 
 /* GET /books/create CREATE FORM*/
 router.get("/books/create", (req, res, next) => {
-  res.render("books/book-create");
+  Author.find()
+    .then((authorsArr) => {
+      //console.log(authorsArr);
+      res.render("books/book-create", { authorsArr });//this alway has to be the same with the one in views
+    })
+    .catch((e) => {
+      console.log("error display form to creating new book", e);
+      next(e);
+    });
 });
 /* POST /books/create PROCESS FORM */
 router.post("/books/create", (req, res, next) => {
