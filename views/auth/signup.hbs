@@ -1,5 +1,11 @@
 <h2>Register</h2>
 
+{{#if errorMessage}}
+<p class="warning">
+    {{errorMessage}}
+</p>
+{{/if}}
+
 <form method="POST" action="/signup">
 
     <label> Email
