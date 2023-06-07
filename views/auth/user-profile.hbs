@@ -1,5 +1,12 @@
 {{!-- {{>navbaruserprofile}} --}}
+
+{{#if this}}
 <h2>Welcome {{email}}</h2>
+{{else}}
+<p>You are not logged in</p>
+<p>Click <a href="/login">here</a> to login</p>
+{{/if}}
+
 
 {{!-- <form method="POST" action="/signup">
 

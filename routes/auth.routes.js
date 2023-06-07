@@ -123,7 +123,15 @@ router.post("/login", (req, res, next) => {
     });
 });
   
-  /////GET /user-profile
+/////POST /user-profile
+router.post("/logout", (req, res, next) => {
+   req.session.destroy((err) => {
+     //session.destroy return a function
+     if (err) next(err);
+     res.redirect("/"); // if logout sucessful, redirect to homepage
+   });
+})
+/////GET /user-profile
   router.get("/user-profile", (req, res, next) => {
           
     res.render("auth/user-profile", req.session.currentUser);
