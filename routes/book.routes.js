@@ -28,6 +28,8 @@ router.get("/books", (req, res, next) => {
 
 /* GET /books/create CREATE FORM*/
 router.get("/books/create", (req, res, next) => {
+  //example to track how many times created req.session.numberOfPagesVisited++
+
   Author.find()
     .then((authorsArr) => {
       //console.log(authorsArr);

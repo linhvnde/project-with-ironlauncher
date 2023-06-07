@@ -1,6 +1,12 @@
-<h2>Login your account</h2>
+<h2>Login to your account</h2>
 
 <form method="POST" action="/login">
+
+   {{#if errorMessage}}
+    <p class="warning">
+        {{errorMessage}}
+    </p>
+    {{/if}}
 
     <label> Email
         <input type="email" name="email" placeholder="rockstar@ironhack.com" required />
@@ -17,3 +23,30 @@
     </div>
 
 </form>
+
+{{!-- <h2>Login</h2>
+
+<form method="POST" action="/login">
+
+    {{#if errorMessage}}
+    <p class="warning">
+        {{errorMessage}}
+    </p>
+    {{/if}}
+
+    <label> Email
+        <input type="email" name="email" placeholder="rockstar@ironhack.com" required />
+    </label>
+
+    <label> Password
+        <input type="password" name="password" placeholder="********" required />
+    </label>
+
+    <button type="submit">Login</button>
+
+
+    <div class="info">
+        <p>If you don't have an account, click <a href="/signup">here</a> to create one.</p>
+    </div>
+
+</form> --}}
