@@ -1,7 +1,6 @@
-{{!-- {{>navbaruserprofile}} --}}
 
-{{#if this}}
-<h2>Welcome {{email}}</h2>
+{{#if authenticated}}
+<h2>Welcome {{user.email}}</h2>
 {{else}}
 <p>You are not logged in</p>
 <p>Click <a href="/login">here</a> to login</p>

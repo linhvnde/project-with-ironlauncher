@@ -15,20 +15,23 @@
          <a href="/books">| All Books |</a>
          <a href="/books/create">| Create New Book |</a>
          <a href="/authors">| All Authors |</a>
-         <a href="/signup">Signup</a>
+         {{!-- <a href="/signup">Signup</a>
          <a href="/login">Login</a>
          <form id="logout-form" method="POST" action="/logout">
             <button>Logout</button>
-         </form>
+         </form> --}}
          
-         {{!-- {{#if authenticated}}
+         {{#if authenticated}}
+
+         <a href="/user-profile">| My Profile |</a>
             <form id="logout-form" method="POST" action="/logout">
                <button>Logout</button>
             </form>
          {{else}}
             <a href="/signup">Signup</a>
             <a href="/login">Login</a>
-         {{/if}} --}}
+         {{/if}}
+
       </nav>
 
       {{{body}}}

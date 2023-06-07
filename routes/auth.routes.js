@@ -50,9 +50,20 @@ router.post("/signup", (req, res, next) => {
       };
       return User.create(newUser);
     })
-    .then((userFromDB) => {
+    .then((user) => {
       //account create succcessfully
-      res.redirect("/user-profile");
+      req.session.currentUser = {
+        _id: user._id,
+        email: user.email, //and other user fields if needed
+      };
+      console.log(
+        "SIGNUP SUCCESSFUL LINE 57 auth.routes.js",
+        req.session.currentUser
+      );
+      res.render("auth/user-profile", {
+        user: req.session.currentUser,
+        authenticated: req.session.currentUser, //can consider to use !! to convert to truthy
+      });
     })
     .catch((error) => {
       console.log("error creating account...", error);
@@ -81,7 +92,6 @@ router.post("/signup", (req, res, next) => {
     });
 });
 
-
 ////Login current account
 /////GET /login
 router.get("/login", (req, res, next) => {
@@ -91,7 +101,7 @@ router.get("/login", (req, res, next) => {
 /////POST /login
 router.post("/login", (req, res, next) => {
   const { email, password } = req.body;
-  
+
   if (email === "" || password === "") {
     res.status(400).render("auth/login", {
       errorMessage: "Please enter both, email and password to login.",
@@ -99,17 +109,27 @@ router.post("/login", (req, res, next) => {
     return;
   }
   User.findOne({ email: email }) //key is from the model and the value is from the req.body
-  .then((user) => {
-    if (!user) {
-      //user doesn't exist (mongoose returns "null")
-      res.status(400).render("auth/login", {
-        errorMessage: "Email is not registered. Try with other email.",
-      });
-      return;
-    } else if (bcryptjs.compareSync(password, user.passwordHash)) {
+    .then((user) => {
+      if (!user) {
+        //user doesn't exist (mongoose returns "null")
+        res.status(400).render("auth/login", {
+          errorMessage: "Email is not registered. Try with other email.",
+        });
+        return;
+      } else if (bcryptjs.compareSync(password, user.passwordHash)) {
         //login successful
-        req.session.currentUser = user;
-        res.render("auth/user-profile",user);
+        req.session.currentUser = {
+          _id: user._id, // Or user.id
+          email: user.email,
+        };
+        console.log(
+          "LOGIN SUCCESSFUL LINE 127 auth.routes.js",
+          req.session.currentUser
+        );
+        res.render("auth/user-profile", {
+          user: req.session.currentUser,
+          authenticated: req.session.currentUser,
+        });
       } else {
         //login failed
         res.status(400).render("auth/login", {
@@ -122,18 +142,20 @@ router.post("/login", (req, res, next) => {
       next(error);
     });
 });
-  
+
 /////POST /user-profile
 router.post("/logout", (req, res, next) => {
-   req.session.destroy((err) => {
-     //session.destroy return a function
-     if (err) next(err);
-     res.redirect("/"); // if logout sucessful, redirect to homepage
-   });
-})
-/////GET /user-profile
-  router.get("/user-profile", (req, res, next) => {
-          
-    res.render("auth/user-profile", req.session.currentUser);
+  req.session.destroy((err) => {
+    //session.destroy return a function
+    if (err) next(err);
+    res.redirect("/"); // if logout sucessful, redirect to homepage
   });
-  module.exports = router;
+});
+/////GET /user-profile
+router.get("/user-profile", (req, res, next) => {
+  res.render("auth/user-profile", {
+    user: req.session.currentUser,
+    authenticated: req.session.currentUser,
+  });
+});
+module.exports = router;
